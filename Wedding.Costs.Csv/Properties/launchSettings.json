@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Wedding.Costs.Csv": {
+      "commandName": "Project",
+      "commandLineArgs": "interactive"
+    }
+  }
+}

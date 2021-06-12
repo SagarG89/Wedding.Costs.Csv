@@ -28,5 +28,16 @@ namespace Wedding.Costs.Csv
                 }
             }
         }
+
+
+        public static List<CostRecord> ReadFile(string file)
+		{
+            // No exception handling, any read error needs user to fix the file
+            using var sr = new StreamReader(file);
+            using var csv = new CsvHelper.CsvReader(sr, CultureInfo.InvariantCulture);
+            // IDeally from external data source, you would return IEnumerable, but for files, you will get ObjectDisposedException because of the above using statements
+            // It is advanced topic for later...
+            return csv.GetRecords<CostRecord>().ToList();
+		}
     }
 }
