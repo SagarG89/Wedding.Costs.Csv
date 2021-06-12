@@ -11,23 +11,24 @@ using CsvHelper.Configuration.Attributes;
 
 namespace Wedding.Costs.Csv
 {
-    public class CostRecord
-    {
-            [Index(0)]
-            public string Name { get; set; }
-            [Index(1)]
-            public int Cost { get; set; }
-        
-        private static string ParseFromUserInputLine()
-        {
-            var filePath = new StreamReader(@"C:\Users\sagar\source\repos\Wedding.Costs.Csv\Wedding.Costs.Csv\bin\Debug\net5.0\BookCost.csv");
-            string userInput = Console.ReadLine();
+	public enum CostType
+	{
+		Unspecified,
+		Alcohol,
+		Other
+	}
+	public class CostRecord
+	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public decimal Cost { get; set; }
+		public CostType Type { get; set; }
 
-            
+		public static CostRecord ParseFromUserInputLine(string userInput)
+		{
+			throw new NotImplementedException($"Make this");
+		}
 
-           
-        }
-      
-    }
-    }
+	}
+}
 
