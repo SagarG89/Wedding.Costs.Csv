@@ -16,7 +16,9 @@ namespace Wedding.Costs.Csv
 		[Option('t')]
 		public CostType? Type { get; set; }
 		// TODO: Add Ids option
+		public int Id { get; set; }
 		// TODO: Add CostsAbove option
+		public decimal CostsAbove { get; set; }
 	}
 
 	[Verb("add")]

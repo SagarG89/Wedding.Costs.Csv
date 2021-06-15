@@ -14,7 +14,7 @@ namespace Wedding.Costs.Csv
 {
     class Program
     {
-		public const string CsvFile = @"Costs.csv";
+		public const string CsvFile = @"C:\Users\sagar\source\repos\Wedding.Costs.Csv\Wedding.Costs.Csv\bin\Debug\net5.0\BookCost.csv";
         static void Main(string[] args)
         {
 			// Use commandline parser package to read user commands
@@ -49,8 +49,20 @@ namespace Wedding.Costs.Csv
 						while (true)
 						{
 							// TODO: Use Console.Write and a loop of Console.ReadKey (break on Enter), so the prompt and input is same line
-							Console.WriteLine("Enter command:");
+							Console.Write("Enter command:");
 							var userInput = Console.ReadLine();
+						
+							if (userInput.Equals("view", StringComparison.InvariantCultureIgnoreCase))
+                            {
+								var displayView = new ViewCostsCommand();
+								Console.WriteLine(displayView);
+                            }
+							if (userInput.Equals("add", StringComparison.InvariantCultureIgnoreCase))
+                            {
+								
+								var displayAdd = new AddCostsCommand();
+								Console.WriteLine(displayAdd);
+                            }
 							if (userInput.Equals("quit", StringComparison.InvariantCultureIgnoreCase)
 								|| userInput.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
 								break;
@@ -59,7 +71,8 @@ namespace Wedding.Costs.Csv
 						Console.WriteLine("Ending interactive session:");
 						break;
 					case AddCostsCommand ac:
-						throw new NotImplementedException("TODO");
+						AddCosts(ac);
+							break;
 					default:
 						throw new InvalidOperationException($"Unexpected command {obj?.GetType().FullName}");
 				}
@@ -70,7 +83,24 @@ namespace Wedding.Costs.Csv
 				Console.Error.WriteLine(e.ToString());
 			}
 		}
+		//Have I gone about this the right way?
+		private static void AddCosts(AddCostsCommand ac)
+        {
+            var records = CsvReader.ReadFile(CsvFile);
+			var toAddName = records.SingleOrDefault(x => x.Name == ac.Name);
+			var toAddCost = records.SingleOrDefault(x => x.Cost == ac.Cost);
+			var toAddCostType = records.SingleOrDefault(x => x.Type == ac.Type);
+			if (toAddCost == null || toAddName == null || toAddCostType == null)
+				throw new InvalidOperationException($"Unable to add cost: {toAddName}");
+			if (ac.Name.Length > 0)
+				toAddName.Name = ac.Name;
+			if (ac.Cost > 0)
+				toAddCost.Cost = ac.Cost;
+			if (ac.Type > 0)
+				toAddCostType.Type = ac.Type;
 
+			CsvWriter.AppendNewCosts(CsvFile, records);
+        }
 		private static void EditCosts(EditCostsCommand ec)
 		{
 			// This will raise error if no file/ corrupt file
@@ -81,6 +111,10 @@ namespace Wedding.Costs.Csv
 			if (ec.NewCost.HasValue)
 				toEdit.Cost = ec.NewCost.Value;
 			// TODO: Other properties
+			if (ec.NewName.Length > 0)
+				toEdit.Name = ec.NewName;
+			if (ec.NewType.HasValue)
+				toEdit.Type = ec.NewType.Value;
 
 			// The edited record is in the records list, so saving the whole list will make the csv file edited
 			CsvWriter.SetNewCosts(CsvFile, records);

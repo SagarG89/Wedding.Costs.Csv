@@ -13,6 +13,7 @@ namespace Wedding.Costs.Csv
 {
 	public enum CostType
 	{
+		Location,
 		Unspecified,
 		Alcohol,
 		Other
