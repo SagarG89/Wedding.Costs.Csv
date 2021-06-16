@@ -48,20 +48,27 @@ namespace Wedding.Costs.Csv
 						Console.WriteLine("Beginning interactive session:");
 						while (true)
 						{
+							
 							// TODO: Use Console.Write and a loop of Console.ReadKey (break on Enter), so the prompt and input is same line
 							Console.Write("Enter command:");
 							var userInput = Console.ReadLine();
 						
 							if (userInput.Equals("view", StringComparison.InvariantCultureIgnoreCase))
                             {
+								
 								var displayView = new ViewCostsCommand();
 								Console.WriteLine(displayView);
+							
+									
                             }
 							if (userInput.Equals("add", StringComparison.InvariantCultureIgnoreCase))
                             {
+								var userAddType = Console.ReadLine();
+								Console.Write("Specify the type:");
 								
-								var displayAdd = new AddCostsCommand();
-								Console.WriteLine(displayAdd);
+								
+								
+								
                             }
 							if (userInput.Equals("quit", StringComparison.InvariantCultureIgnoreCase)
 								|| userInput.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
@@ -83,24 +90,20 @@ namespace Wedding.Costs.Csv
 				Console.Error.WriteLine(e.ToString());
 			}
 		}
-		//Have I gone about this the right way?
+		
 		private static void AddCosts(AddCostsCommand ac)
         {
-            var records = CsvReader.ReadFile(CsvFile);
-			var toAddName = records.SingleOrDefault(x => x.Name == ac.Name);
-			var toAddCost = records.SingleOrDefault(x => x.Cost == ac.Cost);
-			var toAddCostType = records.SingleOrDefault(x => x.Type == ac.Type);
-			if (toAddCost == null || toAddName == null || toAddCostType == null)
-				throw new InvalidOperationException($"Unable to add cost: {toAddName}");
-			if (ac.Name.Length > 0)
-				toAddName.Name = ac.Name;
-			if (ac.Cost > 0)
-				toAddCost.Cost = ac.Cost;
-			if (ac.Type > 0)
-				toAddCostType.Type = ac.Type;
+			
+			
+			var addCost = ac.Cost;
+			var addType = ac.Type;
+			var addName = ac.Name;
 
-			CsvWriter.AppendNewCosts(CsvFile, records);
-        }
+			if (addName.Length > 0)
+				addName = ac.Name;
+				
+			//CsvWriter.AppendNewCosts(CsvFile);
+		}
 		private static void EditCosts(EditCostsCommand ec)
 		{
 			// This will raise error if no file/ corrupt file
