@@ -25,15 +25,6 @@ namespace Wedding.Costs.Csv
 		public decimal Cost { get; set; }
 		public CostType Type { get; set; }
 
-		public static CostRecord ParseFromUserInputLine(string userInput)
-		{
-			new CommandLine.Parser
-			{
-				
-			};
-			throw new NotImplementedException($"Make this");
-		}
-
 	}
 }
 

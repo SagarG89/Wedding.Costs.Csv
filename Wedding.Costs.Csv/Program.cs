@@ -27,8 +27,11 @@ namespace Wedding.Costs.Csv
                 .Where(t => t.GetCustomAttribute<VerbAttribute>() != null).ToArray();
             Parser.Default.ParseArguments(args, commands)
                 .WithParsed(Run);
-            
-        }
+
+			//is this where the commandlineparsing is supposed to happen? or is below in the run method?
+			var result = CommandLine.Parser.Default.ParseArguments<CostRecord>(args);
+
+		}
 
 		private static void Run(object obj)
 		{
@@ -64,10 +67,10 @@ namespace Wedding.Costs.Csv
                             }
 							if (userInput.Equals("add", StringComparison.InvariantCultureIgnoreCase))
                             {
-								var addCost = new AddCostsCommand();
-								Console.Write("Specify the Cost Type:");
-								var addCostType = addCost.Type;
-								var reader = Console.ReadLine();
+								var addRecord = new AddCostsCommand();
+
+								Console.WriteLine(addRecord);
+							
 								
 
 								
@@ -97,16 +100,13 @@ namespace Wedding.Costs.Csv
         {
 			
 			var costType = (CostType[])Enum.GetValues(typeof(CostType));
-			var count = ac.Count ?? 1;
-			var records = new List<CostRecord>(count);
+			var records = new List<CostRecord>();
 			var newRecord = new CostRecord
 			{
-
 				Type = costType[(costType.Length)],
 				Name = ac.Name.ToString(),
-			    Cost = ac.Cost.Value,
+                Cost = ac.Cost.Value,
 			};
-		
 			records.Add(newRecord);
 
 

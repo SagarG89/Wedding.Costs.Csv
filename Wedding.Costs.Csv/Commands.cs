@@ -30,7 +30,7 @@ namespace Wedding.Costs.Csv
 		public string Name { get; set; }
 		[Value(2)]
 		public decimal? Cost { get; set; }
-		public int? Count { get; set; }
+
 	}
 
 	[Verb("edit")]
