@@ -9,6 +9,7 @@ using CsvHelper;
 using CsvHelper.Configuration.Attributes;
 using System.Reflection;
 using CommandLine;
+using CsvHelper.Configuration;
 
 namespace Wedding.Costs.Csv
 {
@@ -63,11 +64,12 @@ namespace Wedding.Costs.Csv
                             }
 							if (userInput.Equals("add", StringComparison.InvariantCultureIgnoreCase))
                             {
-								var userAddType = Console.ReadLine();
-								Console.Write("Specify the type:");
+								var addCost = new AddCostsCommand();
+								Console.Write("Specify the Cost Type:");
+								var addCostType = addCost.Type;
+								var reader = Console.ReadLine();
 								
-								
-								
+
 								
                             }
 							if (userInput.Equals("quit", StringComparison.InvariantCultureIgnoreCase)
@@ -94,16 +96,23 @@ namespace Wedding.Costs.Csv
 		private static void AddCosts(AddCostsCommand ac)
         {
 			
-			
-			var addCost = ac.Cost;
-			var addType = ac.Type;
-			var addName = ac.Name;
+			var costType = (CostType[])Enum.GetValues(typeof(CostType));
+			var count = ac.Count ?? 1;
+			var records = new List<CostRecord>(count);
+			var newRecord = new CostRecord
+			{
 
-			if (addName.Length > 0)
-				addName = ac.Name;
-				
-			//CsvWriter.AppendNewCosts(CsvFile);
-		}
+				Type = costType[(costType.Length)],
+				Name = ac.Name.ToString(),
+			    Cost = ac.Cost.Value,
+			};
+		
+			records.Add(newRecord);
+
+
+			CsvWriter.AppendNewCosts(CsvFile, records);
+			
+        }
 		private static void EditCosts(EditCostsCommand ec)
 		{
 			// This will raise error if no file/ corrupt file

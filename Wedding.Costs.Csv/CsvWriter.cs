@@ -38,7 +38,7 @@ namespace Wedding.Costs.Csv
         /// <summary>
         /// This will add costs to the end of the file
         /// </summary>
-        public static void AppendNewCosts(string file, IEnumerable<CostRecord> newCosts)
+        public static void AppendNewCosts(string file,  IEnumerable<CostRecord> newCosts)
 		{
             var config = new CsvHelper.Configuration.CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -68,5 +68,6 @@ namespace Wedding.Costs.Csv
             using var csv = new CsvHelper.CsvWriter(writer, config);
             csv.WriteRecords(costs);
         }
+
     }
 }

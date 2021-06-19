@@ -7,7 +7,7 @@ using System.Globalization;
 using System.IO;
 using CsvHelper;
 using CsvHelper.Configuration.Attributes;
-
+using CommandLine;
 
 namespace Wedding.Costs.Csv
 {
@@ -27,6 +27,10 @@ namespace Wedding.Costs.Csv
 
 		public static CostRecord ParseFromUserInputLine(string userInput)
 		{
+			new CommandLine.Parser
+			{
+				
+			};
 			throw new NotImplementedException($"Make this");
 		}
 
