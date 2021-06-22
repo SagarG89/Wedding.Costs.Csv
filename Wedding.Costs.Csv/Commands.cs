@@ -24,11 +24,11 @@ namespace Wedding.Costs.Csv
 	[Verb("add")]
 	class AddCostsCommand
 	{
-		[Value(0)]
-		public CostType? Type { get; set; }
 		[Value(1)]
-		public string Name { get; set; }
+		public CostType? Type { get; set; }
 		[Value(2)]
+		public string Name { get; set; }
+		[Value(3)]
 		public decimal? Cost { get; set; }
 
 	}

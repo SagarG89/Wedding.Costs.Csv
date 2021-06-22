@@ -48,6 +48,9 @@ namespace Wedding.Costs.Csv
 					case EditCostsCommand ec:
 						EditCosts(ec);
 						break;
+					case AddCostsCommand ac:
+						AddCosts(ac);
+						break;
 					case InteractiveCommand i:
 						Console.WriteLine("Beginning interactive session:");
 						while (true)
@@ -59,22 +62,18 @@ namespace Wedding.Costs.Csv
 						
 							if (userInput.Equals("view", StringComparison.InvariantCultureIgnoreCase))
                             {
-								
 								var displayView = new ViewCostsCommand();
-								Console.WriteLine(displayView);
-							
-									
+								Console.WriteLine(displayView);	
                             }
 							if (userInput.Equals("add", StringComparison.InvariantCultureIgnoreCase))
-                            {
-								var addRecord = new AddCostsCommand();
+							{
+								Console.WriteLine(obj);
+							}
+							if (userInput.Equals("edit", StringComparison.InvariantCultureIgnoreCase))
+							{
+								Console.WriteLine(obj);
+							}
 
-								Console.WriteLine(addRecord);
-							
-								
-
-								
-                            }
 							if (userInput.Equals("quit", StringComparison.InvariantCultureIgnoreCase)
 								|| userInput.Equals("exit", StringComparison.InvariantCultureIgnoreCase))
 								break;
@@ -82,9 +81,7 @@ namespace Wedding.Costs.Csv
 						}
 						Console.WriteLine("Ending interactive session:");
 						break;
-					case AddCostsCommand ac:
-						AddCosts(ac);
-							break;
+					
 					default:
 						throw new InvalidOperationException($"Unexpected command {obj?.GetType().FullName}");
 				}
@@ -101,12 +98,12 @@ namespace Wedding.Costs.Csv
 			
 			var costType = (CostType[])Enum.GetValues(typeof(CostType));
 			var records = new List<CostRecord>();
-			var newRecord = new CostRecord
-			{
-				Type = costType[(costType.Length)],
-				Name = ac.Name.ToString(),
-                Cost = ac.Cost.Value,
-			};
+			var newRecord = new CostRecord();
+			newRecord.Type = costType[costType.Length];
+			newRecord.Name = ac.Name.ToString();
+			newRecord.Cost = ac.Cost.Value;
+
+
 			records.Add(newRecord);
 
 
